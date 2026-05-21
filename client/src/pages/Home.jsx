@@ -1,6 +1,6 @@
 function Home() {
     const handleLogin = () => {
-        window.location.href = 'http://localhost:5000/api/auth/github'
+        window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/github`
     }
 
     return (
