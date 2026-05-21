@@ -14,7 +14,10 @@ startDailyFetch();
 
 // Middleware
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+        'http://localhost:5173',
+        'https://devpulse-silk.vercel.app'
+    ],
     credentials: true
 }));
 app.use(express.json());
