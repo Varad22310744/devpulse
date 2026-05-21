@@ -60,7 +60,7 @@ function LanguageChart({ data }) {
                             borderRadius: '6px',
                             color: '#e6edf3'
                         }}
-                        formatter={(value) => [`${value}%`, 'Usage']}
+                        formatter={(value, name) => [`${value}%`, name]}
                     />
                     <Legend
                         formatter={(value) => (

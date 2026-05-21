@@ -30,11 +30,8 @@ const getUserRepos = async (accessToken) => {
 // Function 2 — Get commits for a specific repo today
 const getCommitsForRepo = async (accessToken, username, repoName, date) => {
     try {
-        const since = new Date(date);
-        since.setHours(0, 0, 0, 0);       // start of day
-
-        const until = new Date(date);
-        until.setHours(23, 59, 59, 999);  // end of day
+        const since = new Date();
+        since.setDate(since.getDate() - 7); // last 7 days instead of today only
 
         const response = await axios.get(
             `${GITHUB_API}/repos/${username}/${repoName}/commits`,
@@ -43,7 +40,6 @@ const getCommitsForRepo = async (accessToken, username, repoName, date) => {
                 params: {
                     author: username,
                     since: since.toISOString(),
-                    until: until.toISOString(),
                     per_page: 100
                 }
             }

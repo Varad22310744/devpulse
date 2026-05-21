@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar'
 import StatsCard from '../components/StatsCard'
 import CommitChart from '../components/CommitChart'
 import LanguageChart from '../components/LanguageChart'
+import HeatMap from '../components/HeatMap'
+import TopRepos from '../components/TopRepos'
 
 const API = 'http://localhost:5000'
 
@@ -146,7 +148,12 @@ function Dashboard({ user }) {
                         </strong>
                     </div>
                 )}
-
+                {dashboard?.recentStats?.length > 0 && (
+                    <HeatMap stats={dashboard.recentStats} />
+                )}
+                {dashboard?.recentStats?.length > 0 && (
+                    <TopRepos stats={dashboard.recentStats} />
+                )}
                 {/* Charts */}
                 {commits.length > 0 && <CommitChart data={commits} />}
 
