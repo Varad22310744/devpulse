@@ -2,8 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Navbar from '../components/Navbar'
 
-const API = 'http://localhost:5000'
-
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 function Report({ user }) {
     const [report, setReport] = useState('')
     const [loading, setLoading] = useState(false)

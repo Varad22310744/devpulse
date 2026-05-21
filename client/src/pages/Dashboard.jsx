@@ -7,7 +7,7 @@ import LanguageChart from '../components/LanguageChart'
 import HeatMap from '../components/HeatMap'
 import TopRepos from '../components/TopRepos'
 
-const API = 'http://localhost:5000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
 function Dashboard({ user }) {
     const [dashboard, setDashboard] = useState(null)

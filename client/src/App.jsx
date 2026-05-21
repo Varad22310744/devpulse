@@ -4,8 +4,7 @@ import axios from 'axios'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Report from './pages/Report'
-
-const API = 'http://localhost:5000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
 function App() {
   const [user, setUser] = useState(null)
