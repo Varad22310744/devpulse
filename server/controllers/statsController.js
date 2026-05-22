@@ -31,7 +31,7 @@ const calculateStreak = (statsArray) => {
 // Controller 1 — Get full dashboard data
 const getDashboard = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         // Fetch last 30 days stats from MongoDB
         const thirtyDaysAgo = new Date();
@@ -74,7 +74,7 @@ const getDashboard = async (req, res) => {
 // Controller 2 — Get commit history for line chart
 const getCommitHistory = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -104,7 +104,7 @@ const getCommitHistory = async (req, res) => {
 // Controller 3 — Get language breakdown for pie chart
 const getLanguages = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -140,7 +140,7 @@ const getLanguages = async (req, res) => {
 // Controller 4 — Fetch fresh GitHub data and save to MongoDB
 const fetchAndSave = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user.id);
 
         // Fetch from GitHub API
         const stats = await fetchAllStats(user.accessToken, user.username);
@@ -150,7 +150,7 @@ const fetchAndSave = async (req, res) => {
         }
 
         // Calculate total commits all time
-        const previousStats = await Stats.find({ userId: user._id });
+        const previousStats = await Stats.find({ userId: user.id });
         const previousTotal = previousStats.reduce(
             (sum, day) => sum + day.commits, 0
         );
@@ -158,7 +158,7 @@ const fetchAndSave = async (req, res) => {
         // Save or update today's stats
         await Stats.findOneAndUpdate(
             {
-                userId: user._id,
+                userId: user.id,
                 date: {
                     $gte: new Date().setHours(0, 0, 0, 0),
                     $lte: new Date().setHours(23, 59, 59, 999)
@@ -166,7 +166,7 @@ const fetchAndSave = async (req, res) => {
             },
             {
                 ...stats,
-                userId: user._id,
+                userId: user.id,
                 totalCommitsAllTime: previousTotal + stats.commits
             },
             { upsert: true, returnDocument: 'after' }  // create if not exists

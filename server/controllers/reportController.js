@@ -6,7 +6,7 @@ const { sendWeeklyDigest } = require('../services/emailService');
 // Controller 1 — Get AI weekly report
 const getWeeklyReport = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         // Fetch last 7 days stats
         const sevenDaysAgo = new Date();
@@ -37,7 +37,7 @@ const getWeeklyReport = async (req, res) => {
 // Controller 2 — Send email digest
 const sendEmailDigest = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
         const user = await User.findById(userId);
 
         if (!user.email) {
