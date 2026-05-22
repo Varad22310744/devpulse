@@ -125,7 +125,9 @@ const sendWeeklyDigest = async (toEmail, username, aiReport, stats) => {
         return true;
 
     } catch (error) {
-        console.error('Email error:', error.message);
+        console.error('Email error full:', JSON.stringify(error, null, 2));
+        console.error('Email error message:', error.message);
+        console.error('Email error code:', error.code);
         return false;
     }
 };
