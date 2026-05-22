@@ -45,7 +45,7 @@ function Dashboard({ user }) {
             await axios.post(
                 `${API}/api/stats/fetch`,
                 {},
-                { withCredentials: true }
+                { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             )
             await loadDashboard()
         } catch (error) {
