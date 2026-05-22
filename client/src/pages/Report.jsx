@@ -15,7 +15,7 @@ function Report({ user }) {
         try {
             const res = await axios.get(
                 `${API}/api/report/weekly`,
-                { withCredentials: true }
+                { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             )
             setReport(res.data.report)
         } catch (error) {
@@ -32,7 +32,7 @@ function Report({ user }) {
             const res = await axios.post(
                 `${API}/api/report/email`,
                 {},
-                { withCredentials: true }
+                { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
             )
             setEmailMsg(res.data.message)
         } catch (error) {

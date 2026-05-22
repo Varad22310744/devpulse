@@ -24,9 +24,9 @@ function Dashboard({ user }) {
         try {
             // Fetch all data in parallel
             const [dashRes, commitRes, langRes] = await Promise.all([
-                axios.get(`${API}/api/stats/dashboard`, { withCredentials: true }),
-                axios.get(`${API}/api/stats/commits`, { withCredentials: true }),
-                axios.get(`${API}/api/stats/languages`, { withCredentials: true })
+                axios.get(`${API}/api/stats/dashboard`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }),
+                axios.get(`${API}/api/stats/commits`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }),
+                axios.get(`${API}/api/stats/languages`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             ])
 
             setDashboard(dashRes.data)

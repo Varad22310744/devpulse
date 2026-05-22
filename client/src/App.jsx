@@ -12,14 +12,33 @@ function App() {
 
   // Check if user is logged in on every page load
   useEffect(() => {
-    axios.get(`${API}/api/auth/me`, { withCredentials: true })
+    // Check token in URL first (after OAuth redirect)
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    if (token) {
+      localStorage.setItem('token', token);
+      window.history.replaceState({}, '', '/dashboard');
+    }
+
+    // Use stored token
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    axios.get(`${API}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${storedToken}` }
+    })
       .then(res => {
-        setUser(res.data)
-        setLoading(false)
+        setUser(res.data);
+        setLoading(false);
       })
       .catch(() => {
-        setUser(null)
-        setLoading(false)
+        localStorage.removeItem('token');
+        setUser(null);
+        setLoading(false);
       })
   }, [])
 

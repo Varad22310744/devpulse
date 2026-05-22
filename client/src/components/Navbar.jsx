@@ -4,7 +4,8 @@ function Navbar({ user }) {
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        window.location.href = 'http://localhost:5000/api/auth/logout'
+        localStorage.removeItem('token')
+        window.location.href = '/'
     }
 
     return (
